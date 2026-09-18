@@ -7,16 +7,12 @@ import (
 ) 
 
 func main() {
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello world")
-	})
-	http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hi")
-	})
+	fs := http.FileServer(http.Dir("."))
+	http.Handle("/", fs);
 
 	port := ":5000"
 	fmt.Println("Server is running on port" + port)
 
 	log.Fatal(http.ListenAndServe(port, nil))
 }
+
